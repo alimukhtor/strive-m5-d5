@@ -34,7 +34,14 @@ reviewsRouter.route('/:reviewId')
 .put(async (req, res, next) => {
     try {
         const reviews = await getReviews()
-        res.send(reviews)    
+        const index = reviews.findIndex(review => review.id === req.params.reviewId)
+        reviews[index] = {
+            ...reviews[index],
+            ...req.body,
+            updatedAt: new Date()
+        }
+        await writeReview(reviews)
+        res.send(reviews[index])    
     } catch (error) {
         next(error)
     }
@@ -42,7 +49,9 @@ reviewsRouter.route('/:reviewId')
 .delete(async (req, res, next) => {
     try {
         const reviews = await getReviews()
-        res.send(reviews)    
+        const remainingReviews = reviews.filter(review => review.id !== req.params.reviewId)
+        await writeReview(remainingReviews)
+        res.status(204).send()    
     } catch (error) {
         next(error)
     }
