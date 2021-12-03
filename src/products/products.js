@@ -1,7 +1,7 @@
 import express from 'express'
 import uniqid from 'uniqid'
 
-import { getProducts, writeProducts} from "../lib/fs-tools.js"
+import { getProducts, writeProducts, getReviews } from "../lib/fs-tools.js"
 
 
 const productsRouter = express.Router()
@@ -81,6 +81,21 @@ productsRouter.delete("/:productId", async(request, response, next)=> {
         const deleteById = products.filter(product => product.id !== request.params.productId)
         await writeProducts(deleteById)
         response.status(204).send()
+    } catch (error) {
+        next(error)
+    }
+})
+
+// END OF DELETING THE PRODUCTS
+
+// START OFTHE PRODUCT REVIEWS
+
+productsRouter.get('/:productId/reviews', async(req, res, next) => {
+    try {
+        const reviews = await getReviews()
+        const productReviews = reviews.filter(review => review.productId === req.params.productId)
+        if (productReviews.length === 0) return res.send('No Reviews For This Product')
+        res.send(productReviews)
     } catch (error) {
         next(error)
     }
