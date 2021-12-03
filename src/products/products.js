@@ -6,7 +6,7 @@ import { getProducts, writeProducts} from "../lib/fs-tools.js"
 
 const productsRouter = express.Router()
 // HERE POSTING NEW PRODUCT
-productsRouter.post("/", async(request, response, next)=> {
+productsRouter.post("/:productId/uploadImage", async(request, response, next)=> {
     try {
         console.log("Body", request.body);
         const newProduct = { ...request.body, createdAt: new Date(), id: uniqid() }
