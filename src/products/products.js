@@ -72,17 +72,16 @@ productsRouter.post("/", productValidation, async(request, response, next)=> {
 productsRouter.get("/", async (req, res, next)=> {
     try {
         const products = await getProducts()
-        // switch (req.query) {
-        //     case [category]: 
-        //         const filteredProducts = products.filter(product => product.category.toLowerCase() === req.query.category.toLowerCase())
-        //         // if (filteredProducts.length === 0) return res.send('No Products With That Category Found')
-        //         res.send(filteredProducts)
-        //         break;
-        //     default: 
-        //     res.send(products)
-        // }
-        // console.log(req.query)
-        res.send(req.query)
+        if (Object.entries(req.query).length === 0) return res.send(products)
+        switch (Object.keys(req.query)[0]) {
+            case 'category': 
+                const filteredProductsByCategory = products.filter(product => product.category.toLowerCase() === req.query.category.toLowerCase())
+                res.send(filteredProductsByCategory)
+                break;
+            case 'maxPrice':
+                const filteredProductsByMaxPrice = products.filter(product => product.price <= req.query.maxPrice)
+                res.send(filteredProductsByMaxPrice)
+        }        
     } catch (error) {
         next(error);
     }
@@ -141,6 +140,26 @@ productsRouter.delete("/:productId", async(request, response, next)=> {
 
 // END OF DELETING THE PRODUCTS
 
+
+// START OFTHE PRODUCT SEARCH
+
+productsRouter.get('/search/:query', async (req, res, next) => {
+    try {
+        const products = await getProducts()
+        const filteredProducts = products.filter(({ name, description, brand }) => 
+            name.toLowerCase().includes(req.params.query.toLowerCase()) || 
+            description.toLowerCase().includes(req.params.query.toLowerCase()) || 
+            brand.toLowerCase().includes(req.params.query.toLowerCase())
+        )
+        res.send(filteredProducts)
+    } catch (error) {
+        next(error)
+    }
+})
+
+// END OF THE PRODUCT SEARCH
+
+
 // START OFTHE PRODUCT REVIEWS
 
 productsRouter.get('/:productId/reviews', async(req, res, next) => {
@@ -153,5 +172,7 @@ productsRouter.get('/:productId/reviews', async(req, res, next) => {
         next(error)
     }
 })
+
+// END OF PRODUCT REVIEWS
 
 export default productsRouter
