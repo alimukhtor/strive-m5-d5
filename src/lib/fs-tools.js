@@ -9,3 +9,11 @@ const reviewsJSONPath = join(dataFolderPath, '/reviews.json')
 
 export const getReviews = () => readJSON(reviewsJSONPath)
 export const writeReview = content => writeJSON(reviewsJSONPath, content)
+
+
+
+const productJSONPath = join(dataFolderPath, "products.json")
+
+export const getProducts = () => readJSON(productJSONPath)
+
+export const writeProducts = (content) => writeJSON(productJSONPath, content)
