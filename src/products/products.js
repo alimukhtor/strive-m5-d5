@@ -24,12 +24,13 @@ productsRouter.post("/", async(request, response, next)=> {
 // END OF POSTING NEW PRODUCT 
 
 // STARTING OF GETTING PRODUCT
-productsRouter.get("/", async(request, response, next)=> {
+productsRouter.get("/", async (req, res, next)=> {
     try {
-        console.log("Getting objects:", request.body);
-       
         const products = await getProducts()
-        response.send(products)
+        if (!req.query.category) return res.send(products)
+        const filteredProducts = products.filter(product => product.category.toLowerCase() === req.query.category.toLowerCase())
+        if (filteredProducts.length === 0) return res.send('No Products With That Category Found')
+        res.send(filteredProducts)
     } catch (error) {
         next(error);
     }
