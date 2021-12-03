@@ -2,6 +2,8 @@ import express from 'express'
 import { getReviews, writeReview } from '../lib/fs-tools.js'
 import uniqid from 'uniqid'
 import createHttpError from 'http-errors'
+import { validationResult } from 'express-validator'
+import { reviewsBodyValidator } from '../middleware/valiation.js'
 
 const reviewsRouter = express.Router()
 
@@ -14,8 +16,10 @@ reviewsRouter.route('/')
         next(error)
     }
 })
-.post(async (req, res, next) => {
+.post(reviewsBodyValidator, async (req, res, next) => {
     try {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) return next(createHttpError(400, { errors }))
         const reviews = await getReviews()
         const newReview = {
             id: uniqid(),
