@@ -9,6 +9,7 @@ const reviewsJSONPath = join(dataFolderPath, '/reviews.json')
 
 const productsPublicFolderPath = (process.cwd(), "./public/img/products")
 
+export const publicFolderPath = join(process.cwd(), 'public')
 export const getReviews = () => readJSON(reviewsJSONPath)
 export const writeReview = content => writeJSON(reviewsJSONPath, content)
 

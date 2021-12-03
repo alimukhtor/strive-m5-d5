@@ -134,6 +134,26 @@ productsRouter.delete("/:productId", async(request, response, next)=> {
 
 // END OF DELETING THE PRODUCTS
 
+
+// START OFTHE PRODUCT SEARCH
+
+productsRouter.get('/search/:query', async (req, res, next) => {
+    try {
+        const products = await getProducts()
+        const filteredProducts = products.filter(({ name, description, brand }) => 
+            name.toLowerCase().includes(req.params.query.toLowerCase()) || 
+            description.toLowerCase().includes(req.params.query.toLowerCase()) || 
+            brand.toLowerCase().includes(req.params.query.toLowerCase())
+        )
+        res.send(filteredProducts)
+    } catch (error) {
+        next(error)
+    }
+})
+
+// END OF THE PRODUCT SEARCH
+
+
 // START OFTHE PRODUCT REVIEWS
 
 productsRouter.get('/:productId/reviews', async(req, res, next) => {
@@ -146,5 +166,7 @@ productsRouter.get('/:productId/reviews', async(req, res, next) => {
         next(error)
     }
 })
+
+// END OF PRODUCT REVIEWS
 
 export default productsRouter

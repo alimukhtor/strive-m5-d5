@@ -1,13 +1,1 @@
-[
-  {
-    "name": "Iphone 1234pro Max",
-    "description": "working smooooooothly",
-    "brand": "iphone 11",
-    "price": 100,
-    "category": "apple",
-    "createdAt": "2021-12-03T11:04:47.425Z",
-    "id": "g2pcdnokwqa5g02",
-    "image": "http://localhost:3001/img/products/g2pcdnokwqa5g02.png",
-    "updatedAt": "2021-12-03T13:12:01.079Z"
-  }
-]
+[{"name":"Iphone 1234pro Max","description":"working smooooooothly","brand":"iphone 11","price":100,"category":"apple","createdAt":"2021-12-03T11:04:47.425Z","id":"g2pcdnokwqa5g02","image":"http://localhost:3001/img/products/g2pcdnokwqa5g02.png","updatedAt":"2021-12-03T13:12:01.079Z"},{"name":"Sony TV 5000","description":"Best TV Ever","brand":"Sony","image":"https://drop.ndtv.com/TECH/product_database/images/2152017124957PM_635_nokia_3310.jpeg?downsize=*:420&output-quality=80","price":400,"category":"TV","createdAt":"2021-12-03T14:21:06.619Z","id":"50twmusc4kwqh5wvv"},{"name":"HP Laptop","description":"Newest Laptop","brand":"HP","image":"https://drop.ndtv.com/TECH/product_database/images/2152017124957PM_635_nokia_3310.jpeg?downsize=*:420&output-quality=80","price":850,"category":"Laptop","createdAt":"2021-12-03T14:21:33.006Z","id":"50twmusc4kwqh6h8u"}]

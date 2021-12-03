@@ -4,6 +4,7 @@ import reviewsRouter from './reviews/reviews.js'
 import errorHandler from './middleware/error-handlers.js'
 import listEndpoints from 'express-list-endpoints'
 import productsRouter from './products/products.js'
+import { publicFolderPath  } from './lib/fs-tools.js'
 
 
 const server = express()
@@ -11,6 +12,7 @@ const port = 3001
 
 server.use(cors())
 server.use(express.json())
+server.use(express.static(publicFolderPath))
 
 server.use('/reviews', reviewsRouter)
 
