@@ -1,6 +1,7 @@
 import express from 'express'
 import { getReviews, writeReview } from '../lib/fs-tools.js'
 import uniqid from 'uniqid'
+import createHttpError from 'http-errors'
 
 const reviewsRouter = express.Router()
 
@@ -35,6 +36,7 @@ reviewsRouter.route('/:reviewId')
     try {
         const reviews = await getReviews()
         const index = reviews.findIndex(review => review.id === req.params.reviewId)
+        if (index === -1) return next(createHttpError(404, `Review With ID ${req.params.reviewId} Not Found.`))
         reviews[index] = {
             ...reviews[index],
             ...req.body,
