@@ -2,6 +2,8 @@ import express from 'express'
 import uniqid from 'uniqid'
 import multer from 'multer'
 import {extname} from "path"
+import { validationResult } from "express-validator"
+import { productValidation } from './validation.js'
 
 import { saveProductImage } from '../lib/fs-tools.js'
 
@@ -46,8 +48,12 @@ productsRouter.post("/:productId/uploadImage", uploader, async(request, response
         }
 })
 // HERE POSTING NEW PRODUCT
-productsRouter.post("/", async(request, response, next)=> {
+productsRouter.post("/", productValidation, async(request, response, next)=> {
     try {
+        const error = validationResult(request)
+        if(!error.isEmpty()){
+            next("All the fields are required to fullfilled", {error})
+        }
         console.log("Body", request.body);
         const newProduct = { ...request.body, createdAt: new Date(), id: uniqid() }
         const products = await getProducts()

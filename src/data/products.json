@@ -1,13 +1,1 @@
-[
-  {
-    "name": "Iphone 1234pro Max",
-    "description": "working smooooooothly",
-    "brand": "iphone 11",
-    "price": 100,
-    "category": "apple",
-    "createdAt": "2021-12-03T11:04:47.425Z",
-    "id": "g2pcdnokwqa5g02",
-    "image": "http://localhost:3001/img/products/g2pcdnokwqa5g02.png",
-    "updatedAt": "2021-12-03T13:12:01.079Z"
-  }
-]
+[{"name":"Iphone 1234pro Max","description":"working smooooooothly","brand":"iphone 11","price":100,"category":"apple","createdAt":"2021-12-03T11:04:47.425Z","id":"g2pcdnokwqa5g02","image":"http://localhost:3001/img/products/g2pcdnokwqa5g02.png","updatedAt":"2021-12-03T13:12:01.079Z"},{"name":"Iphone 1234pro Max","description":"working smooooooothly","brand":"iphone 11","createdAt":"2021-12-03T13:41:12.948Z","id":"g2pcd54ckwqfqlx1"},{"name":"Iphone 1234pro Max","description":"working smooooooothly","brand":"iphone 11","createdAt":"2021-12-03T13:41:49.143Z","id":"g2pcd54ckwqfrduf"},{"name":"Iphone 1234pro Max","description":"working smooooooothly","brand":"iphone 11","createdAt":"2021-12-03T13:45:33.989Z","id":"g2pcd7gckwqfw7c6"},{"name":"Iphone 1234pro Max","description":"working smooooooothly","brand":"iphone 11","createdAt":"2021-12-03T13:46:17.652Z","id":"g2pcd7gckwqfx510"},{"name":"Iphone 1234pro Max","description":"working smooooooothly","brand":"iphone 11","createdAt":"2021-12-03T13:48:22.952Z","id":"g2pcdacgkwqfztpl"},{"name":"Iphone 1234pro Max","description":"working smooooooothly","brand":"iphone 11","createdAt":"2021-12-03T13:49:01.203Z","id":"g2pcd9kckwqg0n84"},{"name":"Iphone 1234pro Max","description":"working smooooooothly","brand":"iphone 11","createdAt":"2021-12-03T13:51:11.995Z","id":"g2pcd8q0kwqg3g58"},{"name":"Iphone 1234pro Max","description":"working smooooooothly","brand":"iphone 11","price":"120$","category":"phone","createdAt":"2021-12-03T13:52:08.652Z","id":"g2pcd8q0kwqg4nv0"},{"name":"Iphone 1234pro Max","description":"working smooooooothly","brand":"iphone 11","createdAt":"2021-12-03T13:53:06.913Z","id":"g2pcd8eokwqg5wte"}]
