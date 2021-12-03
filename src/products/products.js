@@ -1,12 +1,52 @@
 import express from 'express'
 import uniqid from 'uniqid'
+import multer from 'multer'
+import {extname} from "path"
+
+import { saveProductImage } from '../lib/fs-tools.js'
 
 import { getProducts, writeProducts} from "../lib/fs-tools.js"
 
 
 const productsRouter = express.Router()
+
+
+const uploader = multer({
+    fileFilter: (request, file, next) => {
+      if (file.mimetype !== "image/png") {
+        next(createHttpError(400, "only pngs are allowed"))
+      } else {
+        next(null, true)
+      }
+    },
+  }).single("image")
+productsRouter.post("/:productId/uploadImage", uploader, async(request, response, next)=> {
+    try {
+        console.log("File", request.file);
+        const fileName = `${request.params.productId}${extname(request.file.originalname)}`
+ 
+        await saveProductImage(fileName, request.file.buffer)
+
+        const image = `http://localhost:3001/img/products/${fileName}`
+
+
+        const products = await getProducts()
+
+        const productIndex = products.findIndex(product => product.id === request.params.productId)
+
+        if(productIndex !== -1){
+            products[productIndex].image = image
+
+            await writeProducts(products)
+            response.status(201).send({image})
+        }
+            
+        } catch (error) {
+            next(error)
+        }
+})
 // HERE POSTING NEW PRODUCT
-productsRouter.post("/:productId/uploadImage", async(request, response, next)=> {
+productsRouter.post("/", async(request, response, next)=> {
     try {
         console.log("Body", request.body);
         const newProduct = { ...request.body, createdAt: new Date(), id: uniqid() }
@@ -20,7 +60,6 @@ productsRouter.post("/:productId/uploadImage", async(request, response, next)=> 
         next(error)
     }
 })
-
 // END OF POSTING NEW PRODUCT 
 
 // STARTING OF GETTING PRODUCT
