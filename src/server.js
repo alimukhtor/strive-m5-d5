@@ -19,7 +19,7 @@ server.use(errorHandler)
 // ENDPOINTS HERE
 
 server.use("/products", productsRouter)
-console.table(listEndpoints(server))
+// console.table(listEndpoints(server))
 
 
 // ENDPOINTS ENDS HERE
