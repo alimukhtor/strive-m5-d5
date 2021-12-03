@@ -27,10 +27,17 @@ productsRouter.post("/", async(request, response, next)=> {
 productsRouter.get("/", async (req, res, next)=> {
     try {
         const products = await getProducts()
-        if (!req.query.category) return res.send(products)
-        const filteredProducts = products.filter(product => product.category.toLowerCase() === req.query.category.toLowerCase())
-        if (filteredProducts.length === 0) return res.send('No Products With That Category Found')
-        res.send(filteredProducts)
+        // switch (req.query) {
+        //     case [category]: 
+        //         const filteredProducts = products.filter(product => product.category.toLowerCase() === req.query.category.toLowerCase())
+        //         // if (filteredProducts.length === 0) return res.send('No Products With That Category Found')
+        //         res.send(filteredProducts)
+        //         break;
+        //     default: 
+        //     res.send(products)
+        // }
+        // console.log(req.query)
+        res.send(req.query)
     } catch (error) {
         next(error);
     }
