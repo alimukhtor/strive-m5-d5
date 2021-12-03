@@ -66,17 +66,16 @@ productsRouter.post("/", async(request, response, next)=> {
 productsRouter.get("/", async (req, res, next)=> {
     try {
         const products = await getProducts()
-        // switch (req.query) {
-        //     case [category]: 
-        //         const filteredProducts = products.filter(product => product.category.toLowerCase() === req.query.category.toLowerCase())
-        //         // if (filteredProducts.length === 0) return res.send('No Products With That Category Found')
-        //         res.send(filteredProducts)
-        //         break;
-        //     default: 
-        //     res.send(products)
-        // }
-        // console.log(req.query)
-        res.send(req.query)
+        if (Object.entries(req.query).length === 0) return res.send(products)
+        switch (Object.keys(req.query)[0]) {
+            case 'category': 
+                const filteredProductsByCategory = products.filter(product => product.category.toLowerCase() === req.query.category.toLowerCase())
+                res.send(filteredProductsByCategory)
+                break;
+            case 'maxPrice':
+                const filteredProductsByMaxPrice = products.filter(product => product.price <= req.query.maxPrice)
+                res.send(filteredProductsByMaxPrice)
+        }        
     } catch (error) {
         next(error);
     }
