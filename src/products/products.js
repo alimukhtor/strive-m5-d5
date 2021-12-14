@@ -35,7 +35,7 @@ const uploader = multer({
         const newProduct = await pool.query('INSERT INTO product(name, description, brand, image_url, category, price) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
         [request.body.name, request.body.description, request.body.brand, request.body.image_url, request.body.category, request.body.price]
         )
-        response.status(201).send(newProduct)
+        response.status(201).send(newProduct.rows[0])
     } catch (error) {
         next(error)
     }

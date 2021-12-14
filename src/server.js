@@ -9,7 +9,7 @@ import { testDbConnection } from './data/connect.js'
 
 
 const server = express()
-const port = 3001
+const port = process.env.PORT
 
 server.use(cors())
 server.use(express.json())
@@ -27,8 +27,7 @@ server.use("/products", productsRouter)
 
 // ENDPOINTS ENDS HERE
 
-
 server.listen(port, () => {
-    console.log(`Server Running On Port ${port}`)
-    testDbConnection()
+    console.log(`Server Running On Port ${port}`);
+    testDbConnection();
 })
