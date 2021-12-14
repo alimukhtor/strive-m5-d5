@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS product
 -- Table: public.review
 
 
-CREATE TABLE IF NOT EXISTS public.review
+CREATE TABLE IF NOT EXISTS review
 (
     review_id integer PRIMARY KEY NOT NULL GENERATED ALWAYS AS IDENTITY,
     comment text NOT NULL,

@@ -41,10 +41,42 @@ const uploader = multer({
     }
 
   })
-  productsRouter.get("/", async(request, response, next)=> {})
-  productsRouter.get("/:productId", async(request, response, next)=> {})
+  productsRouter.get("/", async(request, response, next)=> {
+    try {
+        console.log("Product_id is :", request.body);
+        const newProduct = await pool.query("SELECT * FROM product;")
+        response.send(newProduct.rows)
+    } catch (error) {
+        next(error)
+    }
+
+  })
+  productsRouter.get("/:productId", async(request, response, next)=> {
+    try {
+        console.log("id", request.params.id);
+        const newProduct = await pool.query("SELECT * FROM product WHERE product_id = $1;", [request.params.id]);
+        if(newProduct.rows[0]){
+            response.send(newProduct.rows[0])
+        }else{
+            response.status(404).send(`Product with an Id ${request.params.id} not found`)
+        }
+    } catch (error) {
+        next(error)
+    }
+
+  })
   productsRouter.put("/:productId", async(request, response, next)=> {})
-  productsRouter.delete("/:productId", async(request, response, next)=> {})
+  productsRouter.delete("/:productId", async(request, response, next)=> {
+    try {
+        const query = (`DELETE FROM product WHERE product_id = ${request.params.id};`);
+        await pool.query(query)
+        response.status(204).send()
+    } catch (error) {
+        next(error)
+    }
+
+
+  })
 
 
 
