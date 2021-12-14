@@ -54,21 +54,30 @@ const uploader = multer({
   productsRouter.get("/:productId", async(request, response, next)=> {
     try {
         console.log("id", request.params.id);
-        const newProduct = await pool.query("SELECT * FROM product WHERE product_id = $1;", [request.params.id]);
+        const newProduct = await pool.query("SELECT * FROM product WHERE product_id = $1;", [request.params.productId]);
         if(newProduct.rows[0]){
             response.send(newProduct.rows[0])
         }else{
-            response.status(404).send(`Product with an Id ${request.params.id} not found`)
+            response.status(404).send(`Product with an Id ${request.params.productId} not found`)
         }
     } catch (error) {
         next(error)
     }
 
   })
-  productsRouter.put("/:productId", async(request, response, next)=> {})
+  productsRouter.put("/:productId", async(request, response, next)=> {
+      try {
+        const updateStatement = Object.entries(request.body).map(([key, value])=> `${key} = '${value}'`).join(", ")
+        const query = `UPDATE product SET ${updateStatement} WHERE product_id = ${request.params.productId} RETURNING *;`
+        const result = await pool.query(query)
+        response.send(result.rows[0])         
+      } catch (error) {
+          next(error)
+      }
+  })
   productsRouter.delete("/:productId", async(request, response, next)=> {
     try {
-        const query = (`DELETE FROM product WHERE product_id = ${request.params.id};`);
+        const query = (`DELETE FROM product WHERE product_id = ${request.params.productId};`);
         await pool.query(query)
         response.status(204).send()
     } catch (error) {
