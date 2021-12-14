@@ -9,7 +9,7 @@ import { testDbConnection } from './data/connect.js'
 
 
 const server = express()
-const port = process.env.PORT
+const port = 3001
 
 server.use(cors())
 server.use(express.json())
