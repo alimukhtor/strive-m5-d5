@@ -5,10 +5,11 @@ import errorHandler from './middleware/error-handlers.js'
 import listEndpoints from 'express-list-endpoints'
 import productsRouter from './products/products.js'
 import { publicFolderPath  } from './lib/fs-tools.js'
+import { testDbConnection } from './data/connect.js'
 
 
 const server = express()
-const port = 3001
+const port = process.env.PORT
 
 server.use(cors())
 server.use(express.json())
@@ -29,4 +30,5 @@ server.use("/products", productsRouter)
 
 server.listen(port, () => {
     console.log(`Server Running On Port ${port}`)
+    testDbConnection()
 })
