@@ -4,12 +4,42 @@ import uniqid from 'uniqid'
 import createHttpError from 'http-errors'
 import { validationResult } from 'express-validator'
 import { reviewsBodyValidator } from '../middleware/valiation.js'
-
+import pool from "../data/connect.js";
 const reviewsRouter = express.Router()
 
 
+reviewsRouter.post("/", reviewsBodyValidator, async(request, response, next)=> {
+    try {
+        const errors = validationResult(request)
+        if (!errors.isEmpty()) return next(createHttpError(400, { errors }))
+        console.log(request.body);
+        const {comment, rate, product_id} = request.body;
+        const newReview = await pool.query(
+            "INSERT INTO review(comment, rate, product_id) VALUES ($1, $2, $3) RETURNING *",
+            [
+              request.body.comment,
+              request.body.rate,
+              request.body.product_id
+            ]
+          )
+          response.status(201).send(newReview)
+    } catch (error) {
+        next("error is : ", error)
+    }
+
+})
+reviewsRouter.get("/", async(request, response, next)=> {
+    const reviews = await pool.query("SELECT * FROM review")
+    response.send(reviews.rows)
+
+})
+reviewsRouter.get("/:reviewId", async(request, response, next)=> {})
+reviewsRouter.put("/:reviewId", async(request, response, next)=> {})
+reviewsRouter.delete("/:reviewId", async(request, response, next)=> {})
 
 
+
+export default reviewsRouter
 
 
 
@@ -78,5 +108,3 @@ const reviewsRouter = express.Router()
 //         next(error)
 //     }
 // })
-
-export default reviewsRouter
